@@ -1,0 +1,14 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  padding: 6rem;
+}
+
+.main > h2 {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 55.2px;
+  text-align: center;
+}

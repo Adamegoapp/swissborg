@@ -1,0 +1,1 @@
+export { deviceMediaQueries } from './deviceWidth'
