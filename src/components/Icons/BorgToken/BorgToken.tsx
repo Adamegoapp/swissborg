@@ -10,6 +10,7 @@ const BorgToken: React.FC<BorgTokenProps> = (props) => (
     width={48}
     height={49}
     fill="none"
+    viewBox="0 0 48 49"
     {...props}
   >
     <path

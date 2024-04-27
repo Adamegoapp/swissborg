@@ -1,44 +1,62 @@
-import { useEffect, useRef } from 'react'
-import Chart from 'chart.js/auto'
+import React, { useEffect, useRef } from 'react'
+import './DounatChart.css'
+import Chart, { ChartConfiguration } from 'chart.js/auto'
 
-const DoughnutChart: React.FC = () => {
-  const chartRef = (useRef < HTMLCanvasElement) | (null > null)
+type DoughnutChartProps = {
+  data: {
+    labels: string[]
+    datasets: {
+      data: number[]
+      backgroundColor: string[]
+    }[]
+  }
+}
+
+const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
+  const chartRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
+    let chartInstance: Chart<'doughnut'> | null = null
+
     if (chartRef.current) {
       const ctx = chartRef.current.getContext('2d')
+
       if (ctx) {
-        new Chart(ctx, {
+        const chartConfig: ChartConfiguration<'doughnut'> = {
           type: 'doughnut',
           data: {
-            labels: ['CL', 'ML', 'Spl.L', 'PD', 'Other Permissions'],
-            datasets: [
-              {
-                label: 'My First dataset',
-                backgroundColor: [
-                  '#F0CB8C',
-                  '#EE97A1',
-                  '#A9D5D4',
-                  '#E8A3D7',
-                  '#CFA3FD',
-                ],
-                data: [7, 3, 3, 4, 8],
-              },
-            ],
+            labels: data.labels,
+            datasets: data.datasets,
           },
           options: {
+            cutout: '70%',
             plugins: {
               legend: {
                 position: 'right',
               },
             },
+            elements: {
+              arc: {
+                borderWidth: 0,
+                borderRadius: 0,
+                hoverBorderWidth: 0,
+              },
+            },
           },
-        })
+        }
+
+        chartInstance = new Chart(ctx, chartConfig)
       }
     }
-  }, [])
 
-  return <canvas ref={chartRef}></canvas>
+    return () => {
+      if (chartInstance) {
+        chartInstance.destroy()
+      }
+    }
+  }, [data])
+
+  return <canvas ref={chartRef} className="dropshadow"></canvas>
 }
 
 export default DoughnutChart

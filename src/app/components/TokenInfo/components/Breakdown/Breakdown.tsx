@@ -1,5 +1,6 @@
 'use client'
 
+import { Icons } from '@/components*'
 import React, { useEffect, useState, useRef } from 'react'
 import './Breakdown.css'
 import Item from './components/Item/Item'
@@ -54,24 +55,29 @@ const Breakdown = () => {
   return (
     <div className="container">
       <Item
+        icon={<Icons.BorgToken />}
         label="Remaining circulating supply"
         value={tokenData?.circulatingSupplyTokens}
       />
       <Item
+        icon={<Icons.Diamond />}
         label="BORG staked"
         value={tokenData?.stakedBorgTokens}
         percent={tokenData?.stakedBorgPercentage}
       />
       <Item
+        icon={<Icons.Diamond />}
         label="BORG in Yield"
         value={tokenData?.borgInYieldTokens}
         percent={tokenData?.borgInYieldPercentage}
       />
       <Item
+        icon={<Icons.Diamond />}
         label="Circulating supply burned"
         value={tokenData?.borgBurnedTokens}
       />
       <Item
+        icon={<Icons.Fire />}
         label="BORG in buyback pool"
         value={tokenData?.borgInBubackPoolTokens}
       />

@@ -8,13 +8,15 @@ type TokenProps = {
   label: string
   value: number | undefined
   percent?: number | undefined
+  icon: React.ReactNode | JSX.Element
 }
 
 const Item: React.FC<TokenProps> = (props) => {
   return (
     <div className="main2">
       <div className="label">
-        i<h2>{props.label}</h2>
+        {props.icon}
+        <h2>{props.label}</h2>
       </div>
       <div className="valueBox">
         <h4>{props?.value?.toLocaleString()}</h4>
