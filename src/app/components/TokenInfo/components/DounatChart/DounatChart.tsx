@@ -32,7 +32,10 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
             cutout: '70%',
             plugins: {
               legend: {
-                position: 'right',
+                position: 'right', // Specify legend position by x and y coordinates
+                labels: {
+                  boxWidth: 10, // Adjust the width of legend color boxes
+                },
               },
             },
             elements: {

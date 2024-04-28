@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 40px;
   width: 100%;
-  background-image: linear-gradient(to right, #272f37, #596c82);
+  background: linear-gradient(270deg, #364053 0%, #191e29 100%);
   color: white;
   padding: 50px;
 }

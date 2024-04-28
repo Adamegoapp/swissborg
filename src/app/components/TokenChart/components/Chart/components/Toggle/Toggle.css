@@ -1,0 +1,26 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: #ffffff1a;
+  padding: 10px 0px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.active {
+  background: red;
+  transition: background-color 0.5s ease;
+}
+.button:hover {
+  background: red;
+  transition: background-color 1s ease;
+}
+.button span {
+  font-size: 10.98px;
+  font-weight: 600;
+  line-height: 12.63px;
+  text-align: center;
+}

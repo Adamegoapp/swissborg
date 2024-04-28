@@ -1,0 +1,25 @@
+.priceHeader {
+  display: flex;
+  width: 100%;
+  background: #ffffff1a;
+  padding: 15px 10px;
+}
+
+.relative {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.absolute {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.priceHeader > span {
+  font-size: 17.08px;
+  font-weight: 400;
+  line-height: 21.35px;
+  text-align: left;
+}

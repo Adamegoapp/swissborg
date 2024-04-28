@@ -1,0 +1,11 @@
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 6.1px;
+  overflow: hidden;
+}
+.buttonContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 100%;
+}
