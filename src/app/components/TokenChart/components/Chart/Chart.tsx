@@ -23,7 +23,7 @@ type TokenData = {
 const Chart: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedEndpoint, setSelectedEndpoint] = useState<string>('/day');
-  const [tokenData, setTokenData] = useState<TokenData[]>([]);
+  const [tokenData, setTokenData] = useState<TokenData>([]); // Ensure tokenData matches the type definition
 
   useEffect(() => {
     const fetchTokenData = async () => {
@@ -34,8 +34,8 @@ const Chart: React.FC = () => {
         if (!response.ok) {
           throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
-        const tokenData = (await response.json()) as TokenData[];
-        setTokenData(tokenData);
+        const tokenData = (await response.json()) as TokenData;
+        setTokenData(tokenData); // Update tokenData directly without wrapping in an array
       } catch (e: any) {
         setError(e.message);
       }

@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { Icons } from '@/components*'
-import React, { useEffect, useState } from 'react'
-import './Header.css'
+import { Icons } from '@/components*';
+import React, { useEffect, useState } from 'react';
+import './Header.css';
 
 const Header = () => {
   return (
     <div className="priceHeader">
       <div className="relative">
-        <img src="fiat.png" />
+        <img src="fiat.png" alt="americaFlag" />
         <Icons.BorgTokenFilled />
         <div className="absolute">
           <Icons.Arrow />
@@ -16,7 +16,7 @@ const Header = () => {
       </div>
       <span className="">price</span>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
