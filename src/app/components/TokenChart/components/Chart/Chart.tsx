@@ -1,78 +1,75 @@
-import React, { useEffect, useState } from 'react'
-import './Chart.css'
-import Header from './components/Header/Header'
-import Toggle from './components/Toggle/Toggle'
+import React, { useEffect, useState } from 'react';
+import './Chart.css';
+import Header from './components/Header/Header';
+import PriceDiagram from './components/PriceDiagram/PriceDiagram';
+import Toggle from './components/Toggle/Toggle';
 
-const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com'
-const ENDPOINTS = ['/day', '/month', '/year', '/all']
+const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com';
+const ENDPOINTS = ['/day', '/month', '/year', '/all'];
+
+// Mapping of endpoints to labels
+const endpointLabels: { [key: string]: string } = {
+  '/day': '1D',
+  '/month': '1M',
+  '/year': '1Y',
+  '/all': 'All',
+};
 
 type TokenData = {
-  timestamp: string
-  price: number
-}
+  timestamp: string;
+  price: number;
+}[];
 
 const Chart: React.FC = () => {
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [selectedEndpoint, setSelectedEndpoint] = useState<string>('/day')
-  const [tokenData, setTokenData] = useState<TokenData | null>(null)
+  const [error, setError] = useState<string | null>(null);
+  const [selectedEndpoint, setSelectedEndpoint] = useState<string>('/day');
+  const [tokenData, setTokenData] = useState<TokenData[]>([]);
 
   useEffect(() => {
     const fetchTokenData = async () => {
       try {
         const response = await fetch(
           `${BASE_URL}/api/historical-price${selectedEndpoint}`
-        )
+        );
         if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`)
+          throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
-        const tokenData = (await response.json()) as TokenData
-        setTokenData(tokenData)
+        const tokenData = (await response.json()) as TokenData[];
+        setTokenData(tokenData);
       } catch (e: any) {
-        setError(e.message)
-      } finally {
-        setIsLoading(false)
+        setError(e.message);
       }
-    }
+    };
 
-    fetchTokenData()
-  }, [selectedEndpoint])
+    fetchTokenData();
+  }, [selectedEndpoint]);
 
   const handleEndpointChange = (endpoint: string) => {
-    setSelectedEndpoint(endpoint)
-  }
+    setSelectedEndpoint(endpoint);
+  };
 
-  if (isLoading) {
-    return <div className="loading">Loading...</div>
-  }
-
-  if (error || !tokenData) {
-    return (
-      <div className="error">
-        Error: {error || 'Failed to fetch token data.'}
-      </div>
-    )
+  if (!tokenData.length) {
+    // Check if tokenData is an empty array
+    return <div className="error">Loading</div>;
   }
 
   return (
     <div className="chartContainer">
       <Header />
-      <div>
-        <p>Timestamp: {tokenData.timestamp}</p>
-        <p>Price: {tokenData.price}</p>
-      </div>
+      <PriceDiagram tokenData={tokenData} />
       <div className="buttonContainer">
         {ENDPOINTS.map((endpoint) => (
           <Toggle
             key={endpoint}
             endpoint={endpoint}
+            label={endpointLabels[endpoint]}
             onClick={() => handleEndpointChange(endpoint)}
             isActive={selectedEndpoint === endpoint}
           />
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chart
+export default Chart;

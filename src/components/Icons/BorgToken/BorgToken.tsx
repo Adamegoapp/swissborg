@@ -1,7 +1,7 @@
-import * as React from 'react'
+import * as React from 'react';
 
 interface BorgTokenProps {
-  [key: string]: any
+  [key: string]: any;
 }
 
 const BorgToken: React.FC<BorgTokenProps> = (props) => (
@@ -40,5 +40,5 @@ const BorgToken: React.FC<BorgTokenProps> = (props) => (
       </linearGradient>
     </defs>
   </svg>
-)
-export default BorgToken
+);
+export default BorgToken;

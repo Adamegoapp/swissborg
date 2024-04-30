@@ -2,16 +2,16 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 5px;
   justify-content: space-between;
   border-bottom: 1px solid black;
   padding: 12px 0px;
 }
 
-.label {
+.iconBox {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
 }
 .valueBox {
   display: flex;
@@ -21,11 +21,19 @@
   gap: 5px;
   color: #01c38d;
 }
-.value {
+.directionBox {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
-h4 {
+
+.valueBox {
+  display: flex;
+  justify-content: flex-end;
+}
+.main2 h4 {
+  justify-content: flex-end;
   font-size: 28px;
   font-weight: 600;
   line-height: 32.2px;
@@ -47,4 +55,17 @@ span {
 }
 .bold {
   font-weight: 700;
+}
+
+@media screen and (max-width: 900px) {
+  .directionBox {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .valueBox {
+    display: flex;
+    align-items: flex-start;
+  }
 }

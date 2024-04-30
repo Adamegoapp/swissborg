@@ -1,55 +1,55 @@
-'use client'
+'use client';
 
-import { Icons } from '@/components*'
-import React, { useEffect, useState, useRef } from 'react'
-import './Breakdown.css'
-import Item from './components/Item/Item'
+import { Icons } from '@/components*';
+import React, { useEffect, useState, useRef } from 'react';
+import './Breakdown.css';
+import Item from './components/Item/Item';
 
-const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com'
+const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com';
 
 type TokenData = {
-  borgBurnedPercentage: number
-  borgBurnedTokens: number
-  borgInBubackPoolPercentage: number
-  borgInBubackPoolTokens: number
-  borgInYieldPercentage: number
-  borgInYieldTokens: number
-  borgPendingBurnTokens: number
-  borgPendingBuybackTokens: number
-  borgYieldEarnedUsd: number
-  circulatingSupplyPercentage: number
-  circulatingSupplyTokens: number
-  premiumUsers: number
-  stakedBorgPercentage: number
-  stakedBorgTokens: number
-  weeklyPremiumUsers: number
-  weeklyVolumeUsd: number
-}
+  borgBurnedPercentage: number;
+  borgBurnedTokens: number;
+  borgInBubackPoolPercentage: number;
+  borgInBubackPoolTokens: number;
+  borgInYieldPercentage: number;
+  borgInYieldTokens: number;
+  borgPendingBurnTokens: number;
+  borgPendingBuybackTokens: number;
+  borgYieldEarnedUsd: number;
+  circulatingSupplyPercentage: number;
+  circulatingSupplyTokens: number;
+  premiumUsers: number;
+  stakedBorgPercentage: number;
+  stakedBorgTokens: number;
+  weeklyPremiumUsers: number;
+  weeklyVolumeUsd: number;
+};
 
 const Breakdown = () => {
-  const [error, setError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [tokenData, setTokenData] = useState<TokenData>()
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tokenData, setTokenData] = useState<TokenData>();
 
   useEffect(() => {
     const fetchTokenData = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/api/borg-stats`)
-        const tokenData = (await response.json()) as TokenData
-        setTokenData(tokenData)
+        const response = await fetch(`${BASE_URL}/api/borg-stats`);
+        const tokenData = (await response.json()) as TokenData;
+        setTokenData(tokenData);
       } catch (e: any) {
-        setError(e)
+        setError(e);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchTokenData()
-  }, [])
+    fetchTokenData();
+  }, []);
 
   if (isLoading) {
-    return <div>loading...</div>
+    return <div>loading...</div>;
   }
 
   return (
@@ -72,17 +72,17 @@ const Breakdown = () => {
         percent={tokenData?.borgInYieldPercentage}
       />
       <Item
-        icon={<Icons.Diamond />}
+        icon={<Icons.Fire />}
         label="Circulating supply burned"
         value={tokenData?.borgBurnedTokens}
       />
       <Item
-        icon={<Icons.Fire />}
+        icon={<Icons.BorgTokenRound />}
         label="BORG in buyback pool"
         value={tokenData?.borgInBubackPoolTokens}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Breakdown
+export default Breakdown;

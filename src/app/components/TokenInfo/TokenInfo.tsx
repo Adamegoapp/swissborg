@@ -1,36 +1,36 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import Breakdown from './components/Breakdown/Breakdown'
-import ChartImage from './components/ChartImage/ChartImage'
-import DoughnutChart from './components/DounatChart/DounatChart'
-import './TokenInfo.css'
+import React, { useEffect, useState } from 'react';
+import Breakdown from './components/Breakdown/Breakdown';
+import ChartImage from './components/ChartImage/ChartImage';
+import DoughnutChart from './components/DounatChart/DounatChart';
+import './TokenInfo.css';
 
-const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com'
+const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com';
 
 type TokenData = {
-  borgBurnedPercentage: number
-  borgBurnedTokens: number
-  borgInBubackPoolPercentage: number
-  borgInBubackPoolTokens: number
-  borgInYieldPercentage: number
-  borgInYieldTokens: number
-  borgPendingBurnTokens: number
-  borgPendingBuybackTokens: number
-  borgYieldEarnedUsd: number
-  circulatingSupplyPercentage: number
-  circulatingSupplyTokens: number
-  premiumUsers: number
-  stakedBorgPercentage: number
-  stakedBorgTokens: number
-  weeklyPremiumUsers: number
-  weeklyVolumeUsd: number
-}
+  borgBurnedPercentage: number;
+  borgBurnedTokens: number;
+  borgInBubackPoolPercentage: number;
+  borgInBubackPoolTokens: number;
+  borgInYieldPercentage: number;
+  borgInYieldTokens: number;
+  borgPendingBurnTokens: number;
+  borgPendingBuybackTokens: number;
+  borgYieldEarnedUsd: number;
+  circulatingSupplyPercentage: number;
+  circulatingSupplyTokens: number;
+  premiumUsers: number;
+  stakedBorgPercentage: number;
+  stakedBorgTokens: number;
+  weeklyPremiumUsers: number;
+  weeklyVolumeUsd: number;
+};
 
 const TokenInfo = () => {
-  const [error, setError] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [tokenData, setTokenData] = useState<TokenData>()
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tokenData, setTokenData] = useState<TokenData>();
 
   const data = {
     labels: [
@@ -52,33 +52,33 @@ const TokenInfo = () => {
         ],
       },
     ],
-  }
+  };
 
   useEffect(() => {
     const fetchTokenData = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       try {
-        const response = await fetch(`${BASE_URL}/api/borg-stats`)
-        const tokenData = (await response.json()) as TokenData
-        setTokenData(tokenData)
+        const response = await fetch(`${BASE_URL}/api/borg-stats`);
+        const tokenData = (await response.json()) as TokenData;
+        setTokenData(tokenData);
       } catch (e: any) {
-        setError(e)
+        setError(e);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchTokenData()
-  }, [])
+    fetchTokenData();
+  }, []);
 
-  console.log('test', tokenData?.circulatingSupplyTokens)
+  console.log('test', tokenData?.circulatingSupplyTokens);
 
   if (error) {
-    return <div>wrong with data</div>
+    return <div>wrong with data</div>;
   }
 
   if (isLoading) {
-    return <div>loading...</div>
+    return <div>loading...</div>;
   }
 
   return (
@@ -86,13 +86,12 @@ const TokenInfo = () => {
       <h2>Breakdown of BORG’s circulating supply</h2>
       <div className="content">
         <Breakdown />
-        {/* <ChartImage /> */}
         <div className="chartBox">
           <DoughnutChart data={data} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TokenInfo
+export default TokenInfo;

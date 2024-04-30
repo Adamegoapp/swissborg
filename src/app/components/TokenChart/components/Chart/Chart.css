@@ -3,7 +3,16 @@
   flex-direction: column;
   border-radius: 6.1px;
   overflow: hidden;
+  max-width: 720px;
+  width: 100%;
+  box-shadow: 0px 7.32px 12.2px 0px rgba(0, 0, 0, 0.3);
 }
+
+.priceContainer {
+  display: flex;
+  background-color: red;
+}
+
 .buttonContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

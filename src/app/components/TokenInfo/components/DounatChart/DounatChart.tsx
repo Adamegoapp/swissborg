@@ -1,25 +1,25 @@
-import React, { useEffect, useRef } from 'react'
-import './DounatChart.css'
-import Chart, { ChartConfiguration } from 'chart.js/auto'
+import React, { useEffect, useRef } from 'react';
+import './DounatChart.css';
+import Chart, { ChartConfiguration } from 'chart.js/auto';
 
 type DoughnutChartProps = {
   data: {
-    labels: string[]
+    labels: string[];
     datasets: {
-      data: number[]
-      backgroundColor: string[]
-    }[]
-  }
-}
+      data: number[];
+      backgroundColor: string[];
+    }[];
+  };
+};
 
 const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
-  const chartRef = useRef<HTMLCanvasElement | null>(null)
+  const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    let chartInstance: Chart<'doughnut'> | null = null
+    let chartInstance: Chart<'doughnut'> | null = null;
 
     if (chartRef.current) {
-      const ctx = chartRef.current.getContext('2d')
+      const ctx = chartRef.current.getContext('2d');
 
       if (ctx) {
         const chartConfig: ChartConfiguration<'doughnut'> = {
@@ -32,10 +32,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
             cutout: '70%',
             plugins: {
               legend: {
-                position: 'right', // Specify legend position by x and y coordinates
-                labels: {
-                  boxWidth: 10, // Adjust the width of legend color boxes
-                },
+                display: false,
               },
             },
             elements: {
@@ -46,20 +43,20 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
               },
             },
           },
-        }
+        };
 
-        chartInstance = new Chart(ctx, chartConfig)
+        chartInstance = new Chart(ctx, chartConfig);
       }
     }
 
     return () => {
       if (chartInstance) {
-        chartInstance.destroy()
+        chartInstance.destroy();
       }
-    }
-  }, [data])
+    };
+  }, [data]);
 
-  return <canvas ref={chartRef} className="dropshadow"></canvas>
-}
+  return <canvas ref={chartRef} className="dropshadow"></canvas>;
+};
 
-export default DoughnutChart
+export default DoughnutChart;
