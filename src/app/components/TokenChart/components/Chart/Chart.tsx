@@ -53,10 +53,18 @@ const Chart: React.FC = () => {
     return <div className="error">Loading</div>;
   }
 
+  // To select fewer points so the line is not as sharp, %4 make us select a number then skip 3.
+  const filteredTokenData = tokenData.filter(
+    (_, index) => (index + 1) % 4 === 0
+  );
+
   return (
     <div className="chartContainer">
       <Header />
-      <PriceDiagram tokenData={tokenData} />
+      <div className="priceContainer">
+        <PriceDiagram tokenData={filteredTokenData} />
+        <div className="timeContainer">hello price ptiekcel nlnln ljnjlkn</div>
+      </div>
       <div className="buttonContainer">
         {ENDPOINTS.map((endpoint) => (
           <Toggle

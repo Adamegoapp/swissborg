@@ -10,7 +10,16 @@
 
 .priceContainer {
   display: flex;
-  background-color: red;
+  position: relative;
+  width: 100%;
+  background-color: rgba(25, 30, 41, 0.8);
+}
+
+.timeContainer {
+  display: flex;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 }
 
 .buttonContainer {

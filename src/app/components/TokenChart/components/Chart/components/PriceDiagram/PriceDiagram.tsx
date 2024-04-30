@@ -1,5 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import Chart, { LineOptions } from 'chart.js/auto';
+import Chart, {
+  LineController,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Legend,
+  Tooltip,
+  PointElement,
+  LineElement,
+  LineOptions,
+} from 'chart.js/auto';
 
 type Props = {
   tokenData: { timestamp: string; price: number }[];
@@ -15,7 +25,7 @@ interface CustomLineLineOptions extends LineOptions<'line'> {
 
 const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart<'line' | 'bar'> | null>(null);
+  const chartInstance = useRef<Chart<'line'> | null>(null);
 
   useEffect(() => {
     if (!tokenData.length || !chartRef.current) return;
@@ -39,10 +49,10 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
             label: 'Price',
             data: prices,
             borderColor: 'rgba(1, 195, 141, 1)',
-            borderWidth: 1,
+            borderWidth: 2,
             pointStyle: 'line',
             pointRadius: 0,
-            tension: 0.1,
+            tension: 0,
           },
         ],
       },
@@ -53,6 +63,18 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
           },
           y: {
             position: 'right',
+            ticks: {
+              color: 'white', // Change the color of the text on the y-axis to white
+              callback: function (value) {
+                if (typeof value === 'number') {
+                  return parseFloat(value.toFixed(2));
+                }
+                return value;
+              },
+            },
+            grid: {
+              color: ' rgba(255, 255, 255, 0.05)', // Change the color of the y-axis lines
+            },
           },
         },
         plugins: {
@@ -64,7 +86,7 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
               { offset: 1, color: 'rgba(1, 195, 141, 0)' },
             ],
           },
-        } as CustomLinePluginOptions['options'],
+        } as CustomLineLineOptions['options'],
       },
       plugins: [
         {

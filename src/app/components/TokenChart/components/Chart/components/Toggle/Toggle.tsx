@@ -3,9 +3,9 @@ import './Toggle.css';
 
 type ToggleProps = {
   endpoint: string;
-  label: string; // New prop for label text
+  label: string;
   onClick: () => void;
-  isActive: boolean; // Add a prop to indicate whether the button is active
+  isActive: boolean;
 };
 
 const Toggle: React.FC<ToggleProps> = ({
@@ -17,7 +17,6 @@ const Toggle: React.FC<ToggleProps> = ({
   return (
     <button onClick={onClick} className={isActive ? 'button active' : 'button'}>
       <span>{label}</span>{' '}
-      {/* Use the label prop instead of the endpoint prop */}
     </button>
   );
 };

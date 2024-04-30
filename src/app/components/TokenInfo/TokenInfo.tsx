@@ -83,7 +83,10 @@ const TokenInfo = () => {
 
   return (
     <div className="main">
-      <h2>Breakdown of BORG’s circulating supply</h2>
+      <h2 className="onlyMobile">
+        BORG Buyback performance Breakdown of BORG`s circulating supply
+      </h2>
+      <h2 className="onlyDesktop">Breakdown of BORG`s circulating supply</h2>
       <div className="content">
         <Breakdown />
         <div className="chartBox">
