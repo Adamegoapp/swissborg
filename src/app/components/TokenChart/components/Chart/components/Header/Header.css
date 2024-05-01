@@ -6,6 +6,10 @@
   gap: 10px;
 }
 
+.imageContainer {
+  width: 30px;
+}
+
 .relative {
   position: relative;
   display: flex;
@@ -55,6 +59,10 @@
   }
   .priceChange {
     text-align: center;
+  }
+  .priceHeader {
+    padding: 5px 5px;
+    gap: 5px;
   }
   .priceHeader {
     flex-direction: column;
