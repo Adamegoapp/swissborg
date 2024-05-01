@@ -8,10 +8,13 @@ export const metadata: Metadata = {
   title: 'Swissborg',
   description: 'Swissborg test',
   openGraph: {
-    images: '/Opengraph.png',
+    images: [
+      {
+        url: '/Opengraph.png', // Replace with the correct URL
+      },
+    ],
   },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
