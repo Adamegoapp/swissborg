@@ -41,7 +41,16 @@ const Chart: React.FC = () => {
         throw new Error(`Failed to fetch data: ${response.statusText}`);
       }
       const data = await response.json();
-      setTokenData(data);
+
+      // filter the data to make fewer points so the chart
+      // looks more clean, did not look good with so many data points
+      // sortTokenData(data) if we want all data points
+
+      setTokenData(
+        [...data].filter(
+          (item: unknown, index: number) => (index + 1) % 4 === 0
+        )
+      );
       setError(null);
     } catch (e: any) {
       setError(e.message);

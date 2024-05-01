@@ -34,10 +34,10 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
             label: 'Price',
             data: prices,
             borderColor: 'rgba(1, 195, 141, 1)',
-            borderWidth: 1,
+            borderWidth: 2,
             pointStyle: 'line',
             pointRadius: 0,
-            tension: 0,
+            tension: 0.6,
           },
         ],
       },
@@ -50,7 +50,7 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
           y: {
             position: 'right',
             ticks: {
-              color: 'white', // Change the color of the text on the y-axis to white
+              color: 'white',
               callback: function (value) {
                 if (typeof value === 'number') {
                   return parseFloat(value.toFixed(2));
