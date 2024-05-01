@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: 'https://swissborg-j757rslt6-adamnyberg95s-projects.vercel.app/Opengraph.png',
+        url: '/Opengraph.png',
       },
     ],
   },
