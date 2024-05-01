@@ -4,9 +4,10 @@ import './Header.css';
 
 type HeaderProps = {
   tokenData: { timestamp: string; price: number }[];
+  activeEndpointLabel: string; // New prop for the active endpoint label
 };
 
-const Header: React.FC<HeaderProps> = ({ tokenData }) => {
+const Header: React.FC<HeaderProps> = ({ tokenData, activeEndpointLabel }) => {
   const getPriceChange = (): string => {
     if (tokenData.length < 2) {
       return 'N/A';
@@ -29,7 +30,9 @@ const Header: React.FC<HeaderProps> = ({ tokenData }) => {
       </div>
       <div className="priceBox">
         <span className="price">USD 0.188</span>
-        <span className="priceChange"> {getPriceChange()}</span>
+        <span className="priceChange">
+          {getPriceChange()} ({activeEndpointLabel})
+        </span>
       </div>
     </div>
   );

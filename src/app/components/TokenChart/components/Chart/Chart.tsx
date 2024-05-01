@@ -3,6 +3,7 @@ import './Chart.css';
 import Header from './components/Header/Header';
 import PriceDiagram from './components/PriceDiagram/PriceDiagram';
 import Toggle from './components/Toggle/Toggle';
+import moment from 'moment'; // Import moment library
 
 const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com';
 const ENDPOINTS = ['/day', '/month', '/year', '/all'];
@@ -24,6 +25,9 @@ const Chart: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedEndpoint, setSelectedEndpoint] = useState<string>('/day');
   const [tokenData, setTokenData] = useState<TokenData>([]);
+  const [formattedFirstDate, setFormattedFirstDate] = useState<string>('');
+  const [formattedLastDate, setFormattedLastDate] = useState<string>('');
+  const [formattedDates, setFormattedDates] = useState<string[]>([]);
 
   useEffect(() => {
     fetchData(selectedEndpoint);
@@ -45,6 +49,47 @@ const Chart: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (tokenData.length === 0) return;
+
+    const firstDateIndex = 0;
+    const lastDateIndex = tokenData.length - 1;
+
+    // Calculate the interval between dates
+    const interval = Math.floor((lastDateIndex - firstDateIndex) / 4);
+
+    const dateFormatMap: { [key: string]: string } = {
+      '/day': 'HH:mm',
+      '/month': 'DD/MM',
+      '/year': 'DD/MM',
+      '/all': 'DD/MM',
+    };
+
+    setFormattedFirstDate(
+      moment(tokenData[firstDateIndex].timestamp).format(
+        dateFormatMap[selectedEndpoint]
+      )
+    );
+    setFormattedLastDate(
+      moment(tokenData[lastDateIndex].timestamp).format(
+        dateFormatMap[selectedEndpoint]
+      )
+    );
+
+    // Calculate and format the evenly spaced dates
+    const formattedDatesArray: string[] = [];
+    for (let i = 0; i < 4; i++) {
+      const index = firstDateIndex + (i + 1) * interval;
+      formattedDatesArray.push(
+        moment(tokenData[index].timestamp).format(
+          dateFormatMap[selectedEndpoint]
+        )
+      );
+    }
+
+    setFormattedDates(formattedDatesArray);
+  }, [tokenData, selectedEndpoint]);
+
   const handleEndpointChange = (endpoint: string) => {
     setSelectedEndpoint(endpoint);
   };
@@ -58,31 +103,21 @@ const Chart: React.FC = () => {
   }
 
   // Filter token data to get every fourth element
-  const filteredTokenData = tokenData.filter(
-    (_, index) => (index + 1) % 4 === 0
-  );
-
-  const firstDate = tokenData[0].timestamp; // First date
-  const lastDate = tokenData[tokenData.length - 1].timestamp; // Last date
-  const interval = Math.floor(tokenData.length / 5); // Interval between dates
-
-  // Calculate evenly spread dates
-  const evenlySpreadDates = Array.from({ length: 4 }, (_, i) => {
-    const index = (i + 1) * interval;
-    return tokenData[index].timestamp;
-  });
 
   return (
     <div className="chartContainer">
-      <Header tokenData={tokenData} />
+      <Header
+        tokenData={tokenData}
+        activeEndpointLabel={endpointLabels[selectedEndpoint]}
+      />
       <div className="priceContainer">
-        <PriceDiagram tokenData={filteredTokenData} />
+        <PriceDiagram tokenData={tokenData} />
         <div className="timeContainer">
-          <p> {firstDate}</p>
-          {evenlySpreadDates.map((date, index) => (
+          <p> {formattedFirstDate}</p>
+          {formattedDates.map((date, index) => (
             <p key={index}>{date}</p>
           ))}
-          <p> {lastDate}</p>
+          <p>{formattedLastDate}</p>
         </div>
       </div>
       <div className="buttonContainer">

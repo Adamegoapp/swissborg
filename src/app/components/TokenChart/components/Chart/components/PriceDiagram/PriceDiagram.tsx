@@ -8,7 +8,7 @@ type Props = {
 
 type GradientColor = { offset: number; color: string };
 
-interface CustomLineLineOptions extends LineOptions<'line'> {
+interface CustomLineLineOptions extends LineOptions {
   belowLineGradient?: {
     colors: GradientColor[];
   };
@@ -77,7 +77,7 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
               { offset: 1, color: 'rgba(1, 195, 141, 0)' },
             ],
           },
-        } as CustomLineLineOptions['options'],
+        } as unknown,
       },
       plugins: [
         {
