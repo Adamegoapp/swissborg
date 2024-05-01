@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ tokenData, activeEndpointLabel }) => {
         </div>
       </div>
       <div className="priceBox">
-        <span className="price">USD 0.188</span>
+        <span className="price">USD 0.26</span>
         <span className="priceChange">
           {getPriceChange()} ({activeEndpointLabel})
         </span>

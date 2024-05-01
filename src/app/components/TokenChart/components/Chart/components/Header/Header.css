@@ -48,9 +48,12 @@
 
 @media screen and (max-width: 900px) {
   .price {
-    font-size: 8.61px;
+    font-size: 10.61px;
     font-weight: 400;
     line-height: 9.91px;
+    text-align: center;
+  }
+  .priceChange {
     text-align: center;
   }
   .priceHeader {

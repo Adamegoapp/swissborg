@@ -8,7 +8,6 @@ import moment from 'moment'; // Import moment library
 const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com';
 const ENDPOINTS = ['/day', '/month', '/year', '/all'];
 
-// Mapping of endpoints to labels
 const endpointLabels: { [key: string]: string } = {
   '/day': '1D',
   '/month': '1M',
@@ -43,9 +42,10 @@ const Chart: React.FC = () => {
       }
       const data = await response.json();
       setTokenData(data);
-      setError(null); // Reset error state if successful
+      setError(null);
     } catch (e: any) {
       setError(e.message);
+    } finally {
     }
   };
 
@@ -55,7 +55,7 @@ const Chart: React.FC = () => {
     const firstDateIndex = 0;
     const lastDateIndex = tokenData.length - 1;
 
-    // Calculate the interval between dates
+    // Calculate the interval between dates to make my own x-axis
     const interval = Math.floor((lastDateIndex - firstDateIndex) / 4);
 
     const dateFormatMap: { [key: string]: string } = {
@@ -76,7 +76,6 @@ const Chart: React.FC = () => {
       )
     );
 
-    // Calculate and format the evenly spaced dates
     const formattedDatesArray: string[] = [];
     for (let i = 0; i < 4; i++) {
       const index = firstDateIndex + (i + 1) * interval;
@@ -96,10 +95,6 @@ const Chart: React.FC = () => {
 
   if (error) {
     return <div className="error">{error}</div>;
-  }
-
-  if (!tokenData.length) {
-    return <div className="loading">Loading...</div>;
   }
 
   // To make the line less sharp
