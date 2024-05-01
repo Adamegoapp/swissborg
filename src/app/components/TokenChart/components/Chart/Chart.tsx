@@ -102,7 +102,10 @@ const Chart: React.FC = () => {
     return <div className="loading">Loading...</div>;
   }
 
-  // Filter token data to get every fourth element
+  // To make the line less sharp
+  const filteredTokenData = tokenData.filter(
+    (_, index) => (index + 1) % 4 === 0
+  );
 
   return (
     <div className="chartContainer">
@@ -111,7 +114,7 @@ const Chart: React.FC = () => {
         activeEndpointLabel={endpointLabels[selectedEndpoint]}
       />
       <div className="priceContainer">
-        <PriceDiagram tokenData={tokenData} />
+        <PriceDiagram tokenData={filteredTokenData} />
         <div className="timeContainer">
           <p> {formattedFirstDate}</p>
           {formattedDates.map((date, index) => (
