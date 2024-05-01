@@ -34,7 +34,7 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
             label: 'Price',
             data: prices,
             borderColor: 'rgba(1, 195, 141, 1)',
-            borderWidth: 2,
+            borderWidth: 1,
             pointStyle: 'line',
             pointRadius: 0,
             tension: 0,

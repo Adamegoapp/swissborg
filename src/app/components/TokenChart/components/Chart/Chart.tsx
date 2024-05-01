@@ -97,11 +97,6 @@ const Chart: React.FC = () => {
     return <div className="error">{error}</div>;
   }
 
-  // To make the line less sharp
-  const filteredTokenData = tokenData.filter(
-    (_, index) => (index + 1) % 4 === 0
-  );
-
   return (
     <div className="chartContainer">
       <Header
@@ -109,7 +104,7 @@ const Chart: React.FC = () => {
         activeEndpointLabel={endpointLabels[selectedEndpoint]}
       />
       <div className="priceContainer">
-        <PriceDiagram tokenData={filteredTokenData} />
+        <PriceDiagram tokenData={tokenData} />
         <div className="timeContainer">
           <p> {formattedFirstDate}</p>
           {formattedDates.map((date, index) => (
