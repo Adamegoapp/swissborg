@@ -48,6 +48,8 @@ const Breakdown = () => {
     fetchTokenData();
   }, []);
 
+  console.log(tokenData);
+
   if (isLoading) {
     return <div>loading...</div>;
   }

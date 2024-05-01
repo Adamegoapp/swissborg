@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Breakdown from './components/Breakdown/Breakdown';
-import ChartImage from './components/ChartImage/ChartImage';
-import DoughnutChart from './components/DounatChart/DounatChart';
+import DoughnutChart from './components/DounatChart/DoughnutChart';
 import './TokenInfo.css';
 
 const BASE_URL = 'https://borg-api-techchallenge.swissborg-stage.com';
@@ -29,8 +28,35 @@ type TokenData = {
 
 const TokenInfo = () => {
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [tokenData, setTokenData] = useState<TokenData>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [tokenData, setTokenData] = useState<TokenData | null>(null);
+
+  useEffect(() => {
+    const fetchTokenData = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/api/borg-stats`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const tokenData = await response.json();
+        setTokenData(tokenData);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTokenData();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Something went wrong with fetching the data.</div>;
+  }
 
   const data = {
     labels: [
@@ -42,7 +68,13 @@ const TokenInfo = () => {
     ],
     datasets: [
       {
-        data: [100, 50, 50, 70, 300],
+        data: [
+          tokenData!.stakedBorgTokens,
+          tokenData!.borgBurnedTokens,
+          tokenData!.borgInYieldTokens,
+          tokenData!.borgInBubackPoolTokens,
+          tokenData!.circulatingSupplyTokens,
+        ],
         backgroundColor: [
           '#13E5BF',
           ' #364053',
@@ -53,33 +85,6 @@ const TokenInfo = () => {
       },
     ],
   };
-
-  useEffect(() => {
-    const fetchTokenData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${BASE_URL}/api/borg-stats`);
-        const tokenData = (await response.json()) as TokenData;
-        setTokenData(tokenData);
-      } catch (e: any) {
-        setError(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchTokenData();
-  }, []);
-
-  console.log('test', tokenData?.circulatingSupplyTokens);
-
-  if (error) {
-    return <div>wrong with data</div>;
-  }
-
-  if (isLoading) {
-    return <div>loading...</div>;
-  }
 
   return (
     <div className="main">

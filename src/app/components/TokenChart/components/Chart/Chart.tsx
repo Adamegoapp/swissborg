@@ -23,47 +23,67 @@ type TokenData = {
 const Chart: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedEndpoint, setSelectedEndpoint] = useState<string>('/day');
-  const [tokenData, setTokenData] = useState<TokenData>([]); // Ensure tokenData matches the type definition
+  const [tokenData, setTokenData] = useState<TokenData>([]);
 
   useEffect(() => {
-    const fetchTokenData = async () => {
-      try {
-        const response = await fetch(
-          `${BASE_URL}/api/historical-price${selectedEndpoint}`
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`);
-        }
-        const tokenData = (await response.json()) as TokenData;
-        setTokenData(tokenData); // Update tokenData directly without wrapping in an array
-      } catch (e: any) {
-        setError(e.message);
-      }
-    };
-
-    fetchTokenData();
+    fetchData(selectedEndpoint);
   }, [selectedEndpoint]);
+
+  const fetchData = async (endpoint: string) => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/historical-price${endpoint}`
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data: ${response.statusText}`);
+      }
+      const data = await response.json();
+      setTokenData(data);
+      setError(null); // Reset error state if successful
+    } catch (e: any) {
+      setError(e.message);
+    }
+  };
 
   const handleEndpointChange = (endpoint: string) => {
     setSelectedEndpoint(endpoint);
   };
 
-  if (!tokenData.length) {
-    // Check if tokenData is an empty array
-    return <div className="error">Loading</div>;
+  if (error) {
+    return <div className="error">{error}</div>;
   }
 
-  // To select fewer points so the line is not as sharp, %4 make us select a number then skip 3.
+  if (!tokenData.length) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  // Filter token data to get every fourth element
   const filteredTokenData = tokenData.filter(
     (_, index) => (index + 1) % 4 === 0
   );
 
+  const firstDate = tokenData[0].timestamp; // First date
+  const lastDate = tokenData[tokenData.length - 1].timestamp; // Last date
+  const interval = Math.floor(tokenData.length / 5); // Interval between dates
+
+  // Calculate evenly spread dates
+  const evenlySpreadDates = Array.from({ length: 4 }, (_, i) => {
+    const index = (i + 1) * interval;
+    return tokenData[index].timestamp;
+  });
+
   return (
     <div className="chartContainer">
-      <Header />
+      <Header tokenData={tokenData} />
       <div className="priceContainer">
         <PriceDiagram tokenData={filteredTokenData} />
-        <div className="timeContainer">hello price ptiekcel nlnln ljnjlkn</div>
+        <div className="timeContainer">
+          <p> {firstDate}</p>
+          {evenlySpreadDates.map((date, index) => (
+            <p key={index}>{date}</p>
+          ))}
+          <p> {lastDate}</p>
+        </div>
       </div>
       <div className="buttonContainer">
         {ENDPOINTS.map((endpoint) => (

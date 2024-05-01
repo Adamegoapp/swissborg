@@ -1,16 +1,16 @@
 .priceHeader {
   display: flex;
-  width: 100%;
   background: #ffffff1a;
   padding: 15px 10px;
   border-radius: 6.1px;
+  gap: 10px;
 }
 
 .relative {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  width: fit-content;
 }
 .absolute {
   position: absolute;
@@ -18,9 +18,42 @@
   transform: translateX(-50%);
 }
 
+.priceBox {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: fit-content;
+}
+
+.price {
+  font-size: 17.08px;
+  font-weight: 400;
+  line-height: 21.35px;
+  text-align: left;
+}
+.priceChange {
+  font-size: 10.98px;
+  font-weight: 400;
+  line-height: 12.63px;
+  text-align: left;
+  color: rgba(1, 195, 141, 1);
+}
+
 .priceHeader > span {
   font-size: 17.08px;
   font-weight: 400;
   line-height: 21.35px;
   text-align: left;
+}
+
+@media screen and (max-width: 900px) {
+  .price {
+    font-size: 8.61px;
+    font-weight: 400;
+    line-height: 9.91px;
+    text-align: center;
+  }
+  .priceHeader {
+    flex-direction: column;
+  }
 }

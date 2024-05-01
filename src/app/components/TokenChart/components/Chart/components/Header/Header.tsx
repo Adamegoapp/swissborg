@@ -1,20 +1,36 @@
-'use client';
-
 import { Icons } from '@/components*';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Header.css';
 
-const Header = () => {
+type HeaderProps = {
+  tokenData: { timestamp: string; price: number }[];
+};
+
+const Header: React.FC<HeaderProps> = ({ tokenData }) => {
+  const getPriceChange = (): string => {
+    if (tokenData.length < 2) {
+      return 'N/A';
+    }
+    const firstPrice = tokenData[0].price;
+    const lastPrice = tokenData[tokenData.length - 1].price;
+    const priceChange = ((lastPrice - firstPrice) / firstPrice) * 100;
+
+    return `${priceChange.toFixed(2)}%`;
+  };
+
   return (
     <div className="priceHeader">
       <div className="relative">
-        <img src="fiat.png" alt="americaFlag" />
+        <img src="fiat.png" alt="americaFlag" width={30} height={30} />
         <Icons.BorgTokenFilled />
         <div className="absolute">
           <Icons.Arrow />
         </div>
       </div>
-      <span className="">price</span>
+      <div className="priceBox">
+        <span className="price">USD 0.188</span>
+        <span className="priceChange"> {getPriceChange()}</span>
+      </div>
     </div>
   );
 };

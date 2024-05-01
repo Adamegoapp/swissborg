@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useEffect, useRef } from 'react';
-import './DounatChart.css';
+import './DoughnutChart.css';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
 
 type DoughnutChartProps = {
@@ -29,10 +31,14 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
             datasets: data.datasets,
           },
           options: {
+            aspectRatio: 1.2, // Adjust aspect ratio to make it more rectangular
             cutout: '70%',
             plugins: {
               legend: {
-                display: false,
+                position: 'right',
+                labels: {
+                  boxWidth: 11, // Change the width of the colored boxes close to the legends
+                },
               },
             },
             elements: {
