@@ -4,7 +4,7 @@ import './Header.css';
 
 type HeaderProps = {
   tokenData: { timestamp: string; price: number }[];
-  activeEndpointLabel: string; // New prop for the active endpoint label
+  activeEndpointLabel: string;
 };
 
 const Header: React.FC<HeaderProps> = ({ tokenData, activeEndpointLabel }) => {

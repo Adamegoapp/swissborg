@@ -16,7 +16,7 @@ const Toggle: React.FC<ToggleProps> = ({
 }) => {
   return (
     <button onClick={onClick} className={isActive ? 'button active' : 'button'}>
-      <span>{label}</span>{' '}
+      <span>{label}</span>
     </button>
   );
 };
