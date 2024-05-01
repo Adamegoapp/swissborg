@@ -1,18 +1,12 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
-import Chart, { LineOptions } from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
 type Props = {
   tokenData: { timestamp: string; price: number }[];
 };
 
 type GradientColor = { offset: number; color: string };
-
-interface CustomLineLineOptions extends LineOptions {
-  belowLineGradient?: {
-    colors: GradientColor[];
-  };
-}
 
 const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
@@ -64,27 +58,28 @@ const PriceDiagram: React.FC<Props> = ({ tokenData }) => {
               },
             },
             grid: {
-              color: ' rgba(255, 255, 255, 0.05)', // Change the color of the y-axis lines
+              color: ' rgba(255, 255, 255, 0.05)',
             },
           },
         },
         plugins: {
-          legend: false,
-          title: false,
-          belowLineGradient: {
-            colors: [
-              { offset: 0, color: 'rgba(1, 195, 141, 0.6)' },
-              { offset: 1, color: 'rgba(1, 195, 141, 0)' },
-            ],
+          legend: {
+            display: false,
           },
-        } as unknown,
+          title: {
+            display: false,
+          },
+        },
       },
       plugins: [
         {
           id: 'belowLineGradient',
           beforeDraw(chart) {
             const ctx = chart.ctx as CanvasRenderingContext2D;
-            const colors = chart.options.plugins?.belowLineGradient?.colors;
+            const colors = [
+              { offset: 0, color: 'rgba(1, 195, 141, 0.6)' },
+              { offset: 1, color: 'rgba(1, 195, 141, 0)' },
+            ];
             const yAxis = chart.scales.y;
 
             if (!colors) return;
