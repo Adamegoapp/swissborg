@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: '/Opengraph.png',
+        url: 'https://images.prismic.io/swissborg-website/e8573bff-5eec-40e6-994e-aff476e3367c_Opengraph-Homepage-Default-EN.png?ixlib=gatsbyFP&auto=compress%2Cformat&fit=max&q=80&rect=0%2C0%2C2400%2C1260&w=2400&h=1260',
       },
     ],
   },
