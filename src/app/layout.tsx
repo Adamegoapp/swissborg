@@ -5,12 +5,13 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Swissborg',
-  description: 'Swissborg test',
+  title: 'Swissborg, Invest in crypto assets the smart way',
+  description:
+    'Join thousands of smart users and start investing with the SwissBorg app',
   openGraph: {
     images: [
       {
-        url: '/Opengraph.png', // Replace with the correct URL
+        url: 'https://swissborg-j757rslt6-adamnyberg95s-projects.vercel.app/Opengraph.png',
       },
     ],
   },
